@@ -1,0 +1,23 @@
+FROM python:3
+
+USER root
+
+RUN apt-get update && apt-get install && mkdir /code/
+
+WORKDIR /code/
+
+ARG CACHEBUST_REQ=1
+
+COPY api/requirements.txt ./api/
+RUN python3 -m pip install --no-cache-dir -r ./api/requirements.txt
+RUN python3 -m pip install pytest==6.2.1 pdbpp IPython \
+    && echo "alias ipython from IPython import embed; embed()" > "/root/.pdbrc"
+
+ARG CACHEBUST_APP=1
+
+COPY api/setup.py api/
+COPY api/src/ api/src/
+
+RUN pip install -e api
+
+CMD api

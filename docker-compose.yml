@@ -9,6 +9,21 @@ services:
       - "80:8080"
     networks:
     - mg-backend
+
+  api:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile.api
+    ports:
+      - "8080:8080"
+    networks:
+      public:
+        aliases:
+          - app.localhost
+      mg-backend:
+
 networks:
   mg-backend:
+    driver: bridge
+  public:
     driver: bridge

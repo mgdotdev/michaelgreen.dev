@@ -1,0 +1,5 @@
+document.write(`
+<p style="font-size:20px" align="justify">
+Lectured on chemistry topics for both the Saturday Academy and Summer Scholars diversity outreach programs offered through the University of Missouri School of Medicine in Kansas City, MO. For Saturday Academy, responsibilities consisted of designing and presenting chemistry lectures over the weekends to enrolled middle and high school students from the Kansas City area who had the desire to obtain more exposure to math and science in their pre-collegiate education. Topics covered therein included General Chemistry, Environmental Chemistry, Organic Chemistry, and Physical Chemistry. The summer scholars outreach program consisted of an intensive two-week lecture series for Kansas City area high school seniors, focusing on Organic Chemistry fundamentals, Organic Chemistry Reactions, and Biochemistry.
+</p>
+`)

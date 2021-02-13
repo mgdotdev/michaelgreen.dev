@@ -12,7 +12,7 @@ document.write(`
                     <ul class="icon-list">
                         <li><br><a href="mailto:1mikegrn@gmail.com">1mikegrn@gmail.com</a></li>
                         <li><a href="https://michaelgreen.dev">https://michaelgreen.dev</a></li>
-                        <li>+1 (907) 570-1506</li>
+                        <li>+1 (509) 596-9600</li>
                     </ul>
                 </div>
                 <div class="col-md-6">

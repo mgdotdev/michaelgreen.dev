@@ -1,6 +1,7 @@
 import cherrypy
 
 from .root import ApiRoot
+from .resume.resume import Resume
 from .web_scraping.base import WebScraping
 
 config = {}
@@ -20,6 +21,7 @@ def main():
 
     api = ApiRoot()
     api.webscraping = WebScraping()
+    api.resume = Resume()
 
     cherrypy.tree.mount(api, '/v1', config)
     

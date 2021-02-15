@@ -3,9 +3,8 @@ import requests
 
 from jinja2 import Template
 
-from .settings import SETTINGS
 from .utils import templates
-
+from ..settings import SETTINGS
 
 class Root:
     @cherrypy.expose

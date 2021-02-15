@@ -1,17 +1,7 @@
 import cherrypy
 
 from .app.root import Root, Portfolio
-
-app_config = {
-    '/': {
-        'tools.sessions.on': True,
-        'tools.staticdir.root': "/code/client"
-    },
-    '/static': {
-        'tools.staticdir.on': True,
-        'tools.staticdir.dir': './static'
-    }
-}
+from .settings import SETTINGS
 
 def main():
     cherrypy.config.update({
@@ -21,7 +11,7 @@ def main():
     app = Root()
     app.portfolio = Portfolio()
 
-    cherrypy.tree.mount(app, '/', app_config)
+    cherrypy.tree.mount(app, '/', SETTINGS["server"]["app_config"])
 
     cherrypy.engine.start()
     cherrypy.engine.block()

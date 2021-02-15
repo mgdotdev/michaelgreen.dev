@@ -10,6 +10,7 @@ reset:
 	docker-compose up -d
 
 gdeploy:
+	gsutil cp client/ gs://michaelgreendev/
 	docker build -f _docker/Dockerfile.api -t gcr.io/michaelgreendev/mgdev-api .
 	docker push gcr.io/michaelgreendev/mgdev-api
 	gcloud run deploy --image gcr.io/michaelgreendev/mgdev-api --platform managed

@@ -4,7 +4,9 @@ services:
   server:
     build:
       context: .
-      dockerfile: _docker/Dockerfile.server
+      dockerfile: _docker/Dockerfile.test.server
+    environment:
+      - STATIC_ASSETS=/static
     ports:
       - "80:8080"
     networks:
@@ -13,17 +15,12 @@ services:
   api:
     build:
       context: .
-      dockerfile: _docker/Dockerfile.api
+      dockerfile: _docker/Dockerfile.test.api
     ports:
       - "8080:8080"
     networks:
-      public:
-        aliases:
-          - app.localhost
-      mg-backend:
+      - mg-backend
 
 networks:
   mg-backend:
-    driver: bridge
-  public:
     driver: bridge

@@ -1,0 +1,6 @@
+FROM michaelgreendev_api
+
+RUN python3 -m pip install pytest==6.2.1 pdbpp IPython \
+    && echo "alias ipython from IPython import embed; embed()" > "/root/.pdbrc"
+
+COPY api/tests/ api/tests/

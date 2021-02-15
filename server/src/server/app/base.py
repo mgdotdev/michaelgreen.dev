@@ -8,5 +8,5 @@ class Templates:
     def __getattr__(self, attr) -> None:
         return Templates(os.path.join(self._node, attr))
 
-    def __call__(self, obj: str, *args, **kwargs) -> str:
+    def __call__(self, obj="index.html", *args, **kwargs) -> str:
         return os.path.join(self._node, obj)

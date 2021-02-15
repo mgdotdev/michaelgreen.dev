@@ -11,8 +11,8 @@
 
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
   
-	<link rel="stylesheet" href="/static/css/aos.css"/>
-	<link href="/static/css/main.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href="{{ static_assets }}/css/aos.css"/>
+	<link href="{{ static_assets }}/css/main.css" rel="stylesheet" media="screen">
 
 	<!-- JS -->
 
@@ -22,10 +22,10 @@
 
   <!-- Extras -->
 
-	<link rel="apple-touch-icon" sizes="180x180" href="/static/static/images/favicon_io/apple-touch-icon.png">
-	<link rel="icon" type="image\png" sizes="32x32" href="/static/static/images/favicon_io/favicon-32x32.png">
-	<link rel="icon" type="image\png" sizes="16x16" href="/static/static/images/favicon_io/favicon-16x16.png">
-	<link rel="manifest" href="/static/static/images/favicon_io/site.webmanifest">
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ static_assets }}/images/favicon_io/apple-touch-icon.png">
+	<link rel="icon" type="image\png" sizes="32x32" href="{{ static_assets }}/images/favicon_io/favicon-32x32.png">
+	<link rel="icon" type="image\png" sizes="16x16" href="{{ static_assets }}/images/favicon_io/favicon-16x16.png">
+	<link rel="manifest" href="{{ static_assets }}/images/favicon_io/site.webmanifest">
 
 </head>
 
@@ -38,7 +38,7 @@
 			<div class="container">
 				<div>
 					<div class="dropdown">
-          <script src="/static/js/drop_down.js"></script>
+          <script src="{{ static_assets }}/js/drop_down.js"></script>
 					</div>
 				</div>
 
@@ -55,7 +55,7 @@
 		<!-- Navbar -->
 
 		<!-- Home -->
-		<section id="home" style="background-image: url('/static/images/turtle2.png');">
+		<section id="home" style="background-image: url('{{ static_assets }}/images/turtle2.png');">
 			<div class="container" align="left" style="margin-left:45%; margin-top: 7%">
 				<div class="col-sm-12 cst-home-font">
 					<div data-aos="fade-in" data-aos-delay="1200" data-aos-duration="2000" class="Name">
@@ -197,12 +197,12 @@
 		<!-- Profile -->
 
 		<!-- site tag -->
-    <script src="/static/js/page_tag.js"></script>
+    <script src="{{ static_assets }}/js/page_tag.js"></script>
     <!-- site tag -->
 
   </div>
 </body>
-<script src="/static/js/aos.js"></script>
+<script src="{{ static_assets }}/js/aos.js"></script>
 <script>AOS.init();</script>
-<script src="/static/js/custom.js"></script>
+<script src="{{ static_assets }}/js/custom.js"></script>
 </html>

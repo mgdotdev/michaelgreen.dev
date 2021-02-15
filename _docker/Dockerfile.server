@@ -8,16 +8,14 @@ WORKDIR /code/
 
 ARG CACHEBUST_REQ=1
 
-COPY server/requirements.txt ./server/
+COPY server/requirements.txt server/
 RUN python3 -m pip install --no-cache-dir -r ./server/requirements.txt
-RUN python3 -m pip install pytest==6.2.1 pdbpp IPython \
-    && echo "alias ipython from IPython import embed; embed()" > "/root/.pdbrc"
 
 ARG CACHEBUST_APP=1
 
 COPY server/setup.py server/
 COPY server/src/ server/src/
-COPY client/ client/
+COPY client/templates client/templates
 
 RUN pip install -e server
 

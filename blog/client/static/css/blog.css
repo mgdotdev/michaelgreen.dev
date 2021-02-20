@@ -1,0 +1,181 @@
+/* ---------------------------------------------- /*
+ * General styles
+/* ---------------------------------------------- */
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,700);
+
+body {
+	font: 300 15px/1.6 'Raleway', serif, sans-serif;
+	color: #545454;
+	background: #1a1818;
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+a {
+	color: #00e5ff;
+}
+
+a:hover {
+	color: #C4C4C4;
+}
+
+.box_textshadow {
+    text-shadow:
+    -0.5px -0.5px 0 #000000,
+    0.5px -0.5px 0 #000000,
+    -0.5px 0.5px 0 #000000,
+    0.5px 0.5px 0 #000000,
+    -1px 0 0 #000000,
+    1px 0 0 #000000,
+    0 1px 0 #000000,
+    0 -1px 0 #000000;
+}
+
+/* ---------------------------------------------- /*
+ * Typography
+/* ---------------------------------------------- */
+
+h1, h2, h3, h4, h5, h6 {
+	font: 400 46px/1.2 'Raleway', serif, sans-serif;
+	margin: 5px 0 5px;
+	color: rgb(168, 168, 168);
+}
+
+h1 {
+	font-size: 72px;
+	font-weight: 700;
+	margin: 15px 0 15px;
+}
+
+h2 {
+	font-size: 40px;
+	font-weight: 700;
+}
+
+h3 {
+	font-size: 22px;
+	text-transform: uppercase;
+	margin: 5px 0 15px;
+}
+
+h4 {
+	font-size: 16px;
+	margin: 5px 0 10px;
+}
+
+h5 {
+	font-size: 14px;
+}
+
+h6 {
+	font-size: 12px;
+}
+
+p {
+	color: #C4C4C4;
+}
+
+@media (max-width: 875px) {
+    h1 {
+        font-size: 40px;
+    }
+}
+
+/* ---------------------------------------------- /*
+ * Custom button style
+/* ---------------------------------------------- */
+
+.btn {
+	font-weight: 700;
+	font-size: 14px;
+	padding: 17px 27px;
+	border: 0;
+}
+
+.btn:hover, .btn:focus, .btn:active, .btn.active {
+	outline: inherit !important;
+}
+
+/* Button types*/
+
+.btn-default {
+	background: #FFF;
+	margin-top: 10px;
+}
+
+.btn-custom-1 {
+    color: #FFF; 
+    margin-right: 10px;
+	background: #343a40;
+	border: 2px solid #343a40;
+	padding: 15px 25px;
+}
+
+.btn-custom-1:hover, .btn-custom-1:focus, .btn-custom-1:active, .btn-custom-1.active {
+	background: #FFF;
+	border: 2px solid #343a40;
+	color: #343a40;
+}
+
+.btn-custom-2 {
+    margin-right: 10px;
+	background: rgb(255, 255, 255);
+	border: 2px solid rgb(255, 255, 255);
+	padding: 15px 25px;
+}
+
+.btn-custom-2:hover, .btn-custom-2:focus, .btn-custom-2:active, .btn-custom-2.active {
+	background: #18191a;
+	border: 2px solid #FFF;
+	color: #FFF;
+}
+
+/* ---------------------------------------------- /*
+ * Body
+/* ---------------------------------------------- */
+
+.main_body {
+	display: grid;
+	grid-template-areas: 
+	"top top"
+	"lft rgt"
+	"btm btm"
+	;
+	grid-template-rows: 100px 1fr 50px;
+	grid-template-columns: 1fr 2fr;
+	text-align: center;
+}
+
+.menu {
+	grid-area: lft;
+	display: grid;
+	grid-template-areas: 
+	"navigation"
+	"recap"
+	"categories"
+	"archives";
+}
+
+.content {
+	grid-area: rgt;
+}
+
+.navigation {
+	grid-area: navigation;
+}
+
+.recap {
+	grid-area: recap;
+}
+
+.categories {
+	grid-area: categories;
+}
+
+.archives {
+	grid-area: archives;
+}

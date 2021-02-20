@@ -1,0 +1,22 @@
+FROM python:3
+
+USER root
+
+RUN apt-get update && apt-get install && mkdir /code/
+
+WORKDIR /code/
+
+ARG CACHEBUST_REQ=1
+
+COPY blog/requirements.txt blog/
+RUN python3 -m pip install --no-cache-dir -r ./blog/requirements.txt
+
+ARG CACHEBUST_APP=1
+
+COPY blog/setup.py blog/
+COPY blog/src/ blog/src/
+COPY blog/client/templates/ blog/client/templates/
+
+RUN pip install -e blog
+
+CMD app

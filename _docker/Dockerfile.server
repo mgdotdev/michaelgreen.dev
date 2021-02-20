@@ -15,7 +15,7 @@ ARG CACHEBUST_APP=1
 
 COPY server/setup.py server/
 COPY server/src/ server/src/
-COPY client/templates client/templates
+COPY server/client/templates server/client/templates
 
 RUN pip install -e server
 

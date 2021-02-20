@@ -9,7 +9,7 @@ app_config = {
 }
 
 if STATIC_ASSETS:
-    app_config["/"].update({'tools.staticdir.root': "/code/client"})
+    app_config["/"].update({'tools.staticdir.root': STATIC_ASSETS})
     app_config.update({
         '/static': {
             'tools.staticdir.on': True,
@@ -19,7 +19,7 @@ if STATIC_ASSETS:
 
 SETTINGS = {
     "client": {
-        "static_assets": STATIC_ASSETS or "https://storage.googleapis.com/michaelgreendev/client/static"
+        "static_assets": STATIC_ASSETS or "https://storage.googleapis.com/michaelgreendev/server/client/static"
     },
     "server": {
         "app_config": app_config

@@ -1,3 +1,3 @@
 from .base import Templates
 
-templates = Templates("/code/client/templates/app")
+templates = Templates("/code/server/client/templates")

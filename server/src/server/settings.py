@@ -9,7 +9,7 @@ app_config = {
 }
 
 if STATIC_ASSETS:
-    app_config["/"].update({'tools.staticdir.root': STATIC_ASSETS})
+    app_config["/"].update({'tools.staticdir.root': "/code/server/client"})
     app_config.update({
         '/static': {
             'tools.staticdir.on': True,

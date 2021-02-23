@@ -19,6 +19,7 @@ setup(
     },
     name='server',
     packages=find_packages(where="src"),
+    package_data={"": ['*.txt']},
     package_dir={"": "src"},
     include_package_data=True,
     install_requires=read_requirements("requirements.txt"),

@@ -1,17 +1,6 @@
 version: '3.8'
 
 services:
-  server:
-    build:
-      context: .
-      dockerfile: _docker/Dockerfile.test.server
-    environment:
-      - STATIC_ASSETS=/code/server/client
-    ports:
-      - "80:8080"
-    networks:
-    - mg-backend
-
   api:
     build:
       context: .
@@ -20,7 +9,22 @@ services:
       - "8080:8080"
     networks:
       - mg-backend
-
+  blog:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile.test.blog
+    ports:
+      - "8081:8080"
+    networks:
+    - mg-backend
+  server:
+    build:
+      context: .
+      dockerfile: _docker/Dockerfile.test.server
+    ports:
+      - "80:8080"
+    networks:
+    - mg-backend
 networks:
   mg-backend:
     driver: bridge

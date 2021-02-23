@@ -16,6 +16,7 @@ ARG CACHEBUST_APP=1
 COPY blog/setup.py blog/
 COPY blog/src/ blog/src/
 COPY blog/client/templates/ blog/client/templates/
+COPY blog/docs/ blog/docs/
 
 RUN pip install -e blog
 

@@ -1,6 +1,6 @@
 import cherrypy
 
-from .app.root import Node, _append_nodes
+from .app.root import Root
 from .settings import SETTINGS
 
 
@@ -9,8 +9,7 @@ def main():
         'server.socket_host': '0.0.0.0'
         })
 
-    app = Node()
-    _append_nodes(app)
+    app = Root()
 
     cherrypy.tree.mount(app, '/', SETTINGS["blog"]["app_config"])
 

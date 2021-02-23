@@ -2,3 +2,4 @@ CherryPy==18.6.0
 Jinja2==2.11.3
 requests==2.25.1
 markdown==3.3.3
+ujson==4.0.2

@@ -107,8 +107,8 @@ li{
 	list-style: none;
 }
 
-.nav-link:hover h3 {
-	color: #00e5ff;
+.nav-link:hover {
+	color: #C4C4C4;
 }
 
 /* ---------------------------------------------- /*
@@ -227,8 +227,12 @@ li{
 	color: #00e5ff;
 }
 
-.menu .nav-link {
-	padding: .15rem 0.25rem;
+.menu .nav-link:hover {
+	color: #C4C4C4;
+}
+
+.nav-link h3:hover {
+	color: #C4C4C4;
 }
 
 /* ---------------------------------------------- /*

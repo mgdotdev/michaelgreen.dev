@@ -20,7 +20,7 @@ if STATIC_ASSETS:
 
 SETTINGS = {
     "client": {
-        "static_assets": STATIC_ASSETS or "https://storage.googleapis.com/michaelgreendev/client/static"
+        "static_assets": STATIC_ASSETS or "https://storage.googleapis.com/michaelgreendev/blog/client/static"
     },
     "blog": {
         "app_config": app_config
@@ -36,7 +36,3 @@ with open(os.path.join(HERE, "colors.txt")) as f:
             COLORS[key] = []
         elif line and key:
             COLORS[key].append(line)
-
-# for key, value in COLORS_INVERTED.items():
-#     for v in value:
-#         COLORS[v] = key

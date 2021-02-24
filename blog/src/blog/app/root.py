@@ -192,7 +192,7 @@ def _post_datetimes():
     )
 
 
-def _recent_posts(length=5, year=None):
+def _recent_posts(length=None, year=None):
     results = []
     dates = _post_datetimes()[:length]
     if year:
@@ -209,7 +209,7 @@ def _recent_posts(length=5, year=None):
 
 class Root:
     def __init__(self) -> None:
-        self.recent_posts = _recent_posts()
+        self.recent_posts = _recent_posts(length=5)
         self.posts = Posts(self.recent_posts)
         self.archives = Archives(self.recent_posts)
 

@@ -41,3 +41,6 @@ gdeploy:
 	docker build -f _docker/Dockerfile.server -t gcr.io/michaelgreendev/mgdev-server .
 	docker push gcr.io/michaelgreendev/mgdev-server
 	gcloud run deploy --image gcr.io/michaelgreendev/mgdev-server --platform managed
+	docker build -f _docker/Dockerfile.blog -t gcr.io/michaelgreendev/mgdev-blog .
+	docker push gcr.io/michaelgreendev/mgdev-blog
+	gcloud run deploy --image gcr.io/michaelgreendev/mgdev-blog --platform managed

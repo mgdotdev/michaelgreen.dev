@@ -7,7 +7,7 @@
 body {
 	font: 300 15px/1.6 'Raleway', serif, sans-serif;
 	color: #545454;
-	background: #1a1818;
+	background: #343434;
 }
 
 img {
@@ -83,6 +83,7 @@ p {
 	color: #C4C4C4;
 	font-size: 20px;
 	padding: 10px;
+	margin: 0px;
 	text-align: justify;
 }
 
@@ -104,6 +105,10 @@ pre {
 
 li{
 	list-style: none;
+}
+
+.nav-link:hover h3 {
+	color: #00e5ff;
 }
 
 /* ---------------------------------------------- /*
@@ -176,10 +181,23 @@ li{
 	"navigation"
 	"recents"
 	"archives";
+	background: #1a1818;
 	border-style: solid;
 	border-width: 0px;
 	border-right-width: 3px;
 	border-color: #008496;
+	overflow: scroll;
+	height: 100vh;
+	scrollbar-width: 0px;
+	-ms-overflow-style: none;
+}
+
+.menu::-webkit-scrollbar {
+	display: none;
+}
+
+.menu-content {
+	height: fit-content;
 }
 
 .menu h3 {
@@ -189,7 +207,7 @@ li{
 
 .menu .navigation {
 	grid-area: navigation;
-	padding-top: 20px;
+	padding-top: 15px;
 }
 
 .menu .recents {
@@ -202,6 +220,15 @@ li{
 
 .menu .archives {
 	grid-area: archives;
+}
+
+.menu .nav-link {
+	padding: .15rem 0.25rem;
+	color: #00e5ff;
+}
+
+.menu .nav-link {
+	padding: .15rem 0.25rem;
 }
 
 /* ---------------------------------------------- /*
@@ -224,17 +251,17 @@ li{
 
 .banner {
 	display: flex;
-	height: 20vh;
+	height: 100px;
 	align-items: center;
 	justify-content: center;
 }
 
 .sub-banner {
 	display: flex;
-	height: 7vh;
+	height: 50px;
 	justify-content: left;
 	align-items: center;
-	padding: 1vw;
+	padding: 2vw;
 }
 
 .content-body {
@@ -243,8 +270,16 @@ li{
 	"top"
 	"btm";
 	justify-content: left;
+	text-align: left;
 	align-items: center;
-	padding: 1vw;
+	padding-right: 4vw;
+	padding-left: 4vw;
+	padding-bottom: 2vh;
+	padding-top: 1vh;
+}
+
+.content-body .nav-link {
+	font-size: 20px;
 }
 
 .content-body-header {
@@ -271,10 +306,11 @@ li{
 		"lft"
 		;
 		grid-template-columns: 1fr;
-		grid-template-rows: 1fr 1fr;
+		grid-template-rows: auto;
 		text-align: center;
 		padding: 0px;
 		width: auto;
+		height: fit-content;
 	}
 
 	.menu {
@@ -282,7 +318,7 @@ li{
 		border-right-width: 0px;
 		padding: 0px;
 		width: auto;
-		height: auto;
+		height: fit-content;
 	}
 	
 	.content {
@@ -293,10 +329,10 @@ li{
 	}
 
 	.banner {
-		height: 25vh;
+		height: 125px;
 	}
 
 	.sub-banner {
-		height: 15vh;
+		height: 66px;
 	}
 }

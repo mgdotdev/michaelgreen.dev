@@ -1,3 +1,4 @@
+import datetime
 import os.path
 
 
@@ -10,6 +11,8 @@ class Templates:
         return Templates(os.path.join(self.dirname, attr), self._ext)
 
     def __call__(self, obj="index", *args, **kwargs) -> str:
+        if type(obj) == datetime.datetime:
+            obj = obj.strftime('%Y_%m_%d')
         name = (obj if obj.endswith(self._ext) else obj + self._ext)
         return os.path.join(
             self.dirname, name

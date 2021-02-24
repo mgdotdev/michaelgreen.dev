@@ -31,17 +31,28 @@
 		<div class="wrapper">
 			<div class="main_body">
 				<div class="menu">
-					<ul class="navigation">
-						<h3>Navigation</h3>
-						<li class="nav-item"><a class="nav-link" href="https://michaelgreen.dev">Home</a></li>
-						<li class="nav-item"><a class="nav-link" href="https://michaelgreen.dev/#contact">About</a></li>
-					</ul>
-					<ul class="recents">
-						<h3>Recent Posts</h3>
-					</ul>
-					<ul class="archives">
-						<h3>Archives</h3>
-					</ul>
+					<div class="menu-content">
+						<ul class="navigation">
+							<h3>Navigation</h3>
+							<li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+							<li class="nav-item"><a class="nav-link" href="https://michaelgreen.dev">Main</a></li>
+						</ul>
+						<ul class="recents">
+							<h3>Recent Posts</h3>
+							{% for post in recent_posts %}
+								<li class="nav-item">
+									<a class="nav-link" href="/posts/{{ post.date_file }}">
+										{{ post.date_label }}
+										<br>
+										<span style="font-size: 13px;">{{ post.title }}</span>
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+						<ul class="archives">
+							<a class="nav-item nav-link" href="/archives/"><h3>Archives</h3></a>
+						</ul>						
+					</div>
 				</div>
 				<div class="content">
 					<div class="banner">
@@ -56,14 +67,15 @@
 						</div>
 						<div class="content-body-list">
 							<ul>
-								<li>this</li>
-								<li>that</li>
-								<li>that</li>
-								<li>that</li>
-								<li>that</li>
-								<!-- {% for user in users %}
-									<li></li>
-								{% endfor %} -->
+								{% for post in recent_posts %}
+									<li class="nav-item">
+										<a class="nav-link" href="/posts/{{ post.date_file }}">
+											{{ post.date_label }} -	<span>{{ post.title }}</span>
+											<br>
+										</a>
+									</li>
+									{{ post.introduction }}
+								{% endfor %}
 							</ul>
 						</div>
 					</div>

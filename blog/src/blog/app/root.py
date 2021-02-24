@@ -10,7 +10,7 @@ from datetime import datetime
 from jinja2 import Template
 from markdown import markdown
 
-from .utils import templates, docs
+from .utils import templates, docs, lazyfunction
 from ..settings import SETTINGS, COLORS
 
 KEYWORDS_COLOR = ("#cc7832", sorted(COLORS.pop("#cc7832"), key=len, reverse=True))
@@ -103,13 +103,53 @@ def _format_code_string(snippet):
     return snippet
 
 
-def _render_post(date, template, preview=False):
-    with open(docs(date)) as f:
-        post = f.read()
+@lazyfunction
+def _parse_metadata(date, post=None):
+    if not post:
+        with open(docs(date)) as f:
+            post = f.read()
     regex = re.search("-{3}(?s:.*?)-{3}", post)
-    headers = post[regex.start():regex.end()]
+    metadata = post[regex.start():regex.end()]
     post = post[regex.end():]
+    return metadata, post
+
+
+@lazyfunction
+def _parse_introduction(date, post=None, trailing=False):
+    if not post:
+        _, post = _parse_metadata(date)
+    lines = iter(post.splitlines())
+    for line in lines:
+        if line and not line.startswith(("#", "!")):
+            if trailing:
+                return markdown(line + "..")
+            return markdown(line)
+
+
+@lazyfunction
+def _parse_title(date, post=None):
+    if not post:
+        _, post = _parse_metadata(date)
+    lines = iter(post.splitlines()) 
+    for line in lines:
+        if line and line.startswith(("#")):
+            return re.sub(r"#+? ", r"", line)
+
+
+def _recent_posts_by_year(recent_posts):
+    results = {}
+    for post in recent_posts:
+        try:
+            results[str(post["date"].year)].append(post)
+        except KeyError:
+            results[str(post["date"].year)] = [post]
+    return results
+
+
+def _render_post(date, template, recent_posts):
+    _, post = _parse_metadata(date)
     code_blocks = [block for block in re.finditer("```.*?\n(?s:.*?)\n```", post)]
+    snippets = []
     for index, block in enumerate(code_blocks):
         snippet = block.group()
         language = re.search("```.*?\n", snippet).group()[3:-1]
@@ -131,66 +171,113 @@ def _render_post(date, template, preview=False):
 
     blog_post = Template(document)
     blog_post = blog_post.render(static_assets=SETTINGS["client"]["static_assets"])
-    header_image = re.search("<p><img(?s:.*?)/></p>", blog_post)
-    image_tag = header_image.group()
-    blog_post = blog_post.replace(image_tag, image_tag[3:-4])
     render = template.render(
         static_assets=SETTINGS["client"]["static_assets"],
-        blog_post=blog_post
+        blog_post=blog_post,
+        recent_posts=[{
+                "date_file": post["date"].strftime("%Y_%m_%d"),
+                "date_label": post["date"].strftime("%d %B %Y"),
+                "title": _parse_title(post["date"])
+            } for post in recent_posts]
     )
     return render
 
 
-def _lazyfunction(f):
-    def wrapper(*args, **kwargs):
-        hashable = f"{f.__name__}::{locals()}"
-        if hashable not in wrapper.cache:
-            wrapper.cache[hashable] = f(*args, **kwargs)
-        return wrapper.cache[hashable]
-    wrapper.cache = {}
-    return wrapper
-
-
-@_lazyfunction
-def _posts_list_sorted():
-    names = sorted(
-        os.listdir(docs.dirname), 
-        key = lambda date: datetime.strptime(os.path.splitext(date)[0], '%Y_%m_%d'),
-        reverse = True
+@lazyfunction
+def _post_datetimes():
+    posts = (os.path.splitext(date)[0] for date in os.listdir(docs.dirname))
+    return sorted(
+        [datetime.strptime(post, '%Y_%m_%d') for post in posts],
+        reverse=True
     )
-    return names    
+
+
+def _recent_posts(length=5, year=None):
+    results = []
+    dates = _post_datetimes()[:length]
+    if year:
+        dates = [date for date in dates if date.year == int(year)]
+    for date in dates:
+        metadata, _ = _parse_metadata(date)
+        items = metadata.splitlines()[1:-1]
+        pairs = (item.split(": ") for item in items)
+        as_dict = {key: value.split(', ') for (key, value) in pairs}
+        as_dict.update({"date": date})
+        results.append(as_dict)
+    return results
 
 
 class Root:
     def __init__(self) -> None:
-        self.posts = Posts()
-        self.archives = Archives()
+        self.recent_posts = _recent_posts()
+        self.posts = Posts(self.recent_posts)
+        self.archives = Archives(self.recent_posts)
 
     @cherrypy.expose
     def index(self):
         with open(templates()) as f:
             template = Template(f.read())
         render = template.render(
-            static_assets=SETTINGS["client"]["static_assets"]
+            static_assets=SETTINGS["client"]["static_assets"],
+            recent_posts=[{
+                "date_file": post["date"].strftime("%Y_%m_%d"),
+                "date_label": post["date"].strftime("%d %B %Y"),
+                "title": _parse_title(post["date"]),
+                "introduction": _parse_introduction(post["date"], trailing=True)
+            } for post in self.recent_posts]
         )
         return render
 
 
 @cherrypy.popargs('date')
 class Posts:
+    def __init__(self, recent_posts) -> None:
+        self.recent_posts = recent_posts
+
     @cherrypy.expose
     def index(self, date=None):
         with open(templates("posts")) as f:
             template = Template(f.read())
-        if date:
-            return _render_post(date, template)
+        if date and datetime.strptime(date, "%Y_%m_%d") in _post_datetimes():
+            return _render_post(date, template, self.recent_posts)
         return template.render(
             static_assets=SETTINGS["client"]["static_assets"],
-            blog_post="No Post Selected!"
+            blog_post="No Post Selected!",
+            recent_posts=[{
+                "date_file": post["date"].strftime("%Y_%m_%d"),
+                "date_label": post["date"].strftime("%d %B %Y"),
+                "title": _parse_title(post["date"])
+            } for post in self.recent_posts]
         )
 
 
 @cherrypy.popargs("year")
 class Archives:
+    def __init__(self, recent_posts) -> None:
+        self.recent_posts = recent_posts
+        
+    @cherrypy.expose
     def index(self, year=None):
-        pass
+        with open(templates("archives")) as f:
+            template = Template(f.read())
+        posts = _recent_posts_by_year(_recent_posts(year=year))
+        for year in posts.keys():
+            for post in posts[year]:
+                post.update({
+                    "date_file": post["date"].strftime("%Y_%m_%d"),
+                    "date_label": post["date"].strftime("%d %B %Y"),
+                    "title": _parse_title(post["date"]),
+                    "introduction": _parse_introduction(post["date"], trailing=True)
+                })
+
+        render = template.render(
+            archives=posts,
+            static_assets=SETTINGS["client"]["static_assets"],
+            recent_posts=[{
+                "date_file": post["date"].strftime("%Y_%m_%d"),
+                "date_label": post["date"].strftime("%d %B %Y"),
+                "title": _parse_title(post["date"]),
+                "introduction": _parse_introduction(post["date"], trailing=True)
+            } for post in self.recent_posts]
+        )
+        return render

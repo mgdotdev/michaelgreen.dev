@@ -82,9 +82,9 @@ h6 {
 p {
 	color: #C4C4C4;
 	font-size: 20px;
-	padding: 10px;
 	margin: 0px;
 	text-align: justify;
+	padding-bottom: 20px;
 }
 
 p img {
@@ -250,7 +250,8 @@ li{
 	color: #FFFFFF;
 	text-transform: none;
 	text-align: left;
-	padding: 10px;
+	padding-bottom: 10px;
+	padding-top: 20px;
 }
 
 .banner {
@@ -284,6 +285,7 @@ li{
 
 .content-body .nav-link {
 	font-size: 20px;
+	padding: 0px;
 }
 
 .content-body-header {

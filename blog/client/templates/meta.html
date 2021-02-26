@@ -56,26 +56,22 @@
 				</div>
 				<div class="content">
 					<div class="banner">
-						<h1>Michael Green’s Blog</h1>
-					</div>
-					<div class="sub-banner">
-						<h3>Welcome to Michael’s Blog.</h3>
+            <a class="nav-item nav-link" href="/meta/"><h1 style="text-align:left;">META</h1></a>
 					</div>
 					<div class="content-body">
-						<div class="content-body-header">
-							<h4>Here is a list of most recent posts:</h4>
-						</div>
 						<div class="content-body-list">
 							<ul>
-								{% for post in recent_posts %}
-									<li class="nav-item">
-										<a class="nav-link" href="/posts/{{ post.date_file }}">
-											{{ post.date_label }} -	{{ post.title }}
-											<br>
-										</a>
-									</li>
-									{{ post.introduction }}
-								{% endfor %}
+                {% for focus, tag in foci.items() %}
+                <div class="focus_container">
+                  <a class="nav-item nav-link" href="/meta/{{ focus }}"><h3>{{ focus }}</h3></a>
+                  {% for label, dates in tag.items() %}
+                    <a class="nav-item nav-link" href="/meta/{{ focus }}/{{ label }}"><h5>{{ label }}</h5></a>
+                    {% for date in dates %}
+                    <li class="nav-item"><a class="nav-link" href="/posts/{{ date }}">{{ posts[date].date_label }} - {{ posts[date].title }}</a></li>
+                    {% endfor %}
+                  {% endfor %}
+                </div>
+                {% endfor %}
 							</ul>
 						</div>
 					</div>

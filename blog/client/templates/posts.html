@@ -57,6 +57,9 @@
 				<div class="content">
 					<div class="content-body">
 						{{ blog_post }}
+						<h5>{% if metadata.author %}{% for a in metadata.author %}<a href="/meta/author/{{ a }}">{{ a }}{{ ", " if not loop.last else "" }}</a>{% endfor %}{% endif %} - {% if metadata.location %}{% for loc in metadata.location %}{{ loc }}{{ ", " if not loop.last else "" }}{% endfor %}{% endif %}</h5>
+						{% if metadata.tags %}<h6>Tags: {% for tag in metadata.tags %}<a href="/meta/tags/{{ tag }}">{{ tag }}{{ ", " if not loop.last else "" }}</a>{% endfor %}</h6>{% endif %}
+						{% if metadata.categories %}<h6>Categories: {% for category in metadata.categories %}<a href="/meta/categories/{{ category }}">{{ category }}{{ ", " if not loop.last else "" }}</a>{% endfor %}</h6>{% endif %}
 					</div>
 				</div>
 			</div>

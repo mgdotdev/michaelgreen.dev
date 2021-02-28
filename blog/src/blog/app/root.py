@@ -169,7 +169,7 @@ def _post_dates_by_focus(recent_posts=None, fmt=None):
 
 
 def _render_post(date, template, recent_posts):
-    _, post = _parse_metadata(date)
+    metadata, post = _parse_metadata(date)
     code_blocks = [block for block in re.finditer("```.*?\n(?s:.*?)\n```", post)]
     snippets = []
     for index, block in enumerate(code_blocks):
@@ -195,6 +195,7 @@ def _render_post(date, template, recent_posts):
     blog_post = blog_post.render(static_assets=SETTINGS["client"]["static_assets"])
     return template.render(
         static_assets=SETTINGS["client"]["static_assets"],
+        metadata=_metadata_dict(metadata),
         blog_post=blog_post,
         recent_posts=[{
                 "date_file": post["date"].strftime("%Y_%m_%d"),
@@ -214,6 +215,12 @@ def _post_datetimes():
     )
 
 
+def _metadata_dict(metadata):
+    items = metadata.splitlines()[1:-1]
+    pairs = (item.split(": ") for item in items)
+    return {key: value.split(', ') for (key, value) in pairs}
+
+
 def _recent_posts(length=None, year=None):
     results = []
     dates = _post_datetimes()[:length]
@@ -221,9 +228,7 @@ def _recent_posts(length=None, year=None):
         dates = [date for date in dates if date.year == int(year)]
     for date in dates:
         metadata, _ = _parse_metadata(date)
-        items = metadata.splitlines()[1:-1]
-        pairs = (item.split(": ") for item in items)
-        as_dict = {key: value.split(', ') for (key, value) in pairs}
+        as_dict = _metadata_dict(metadata)
         as_dict.update({"date": date})
         results.append(as_dict)
     return results

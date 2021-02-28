@@ -1,8 +1,6 @@
-FROM python:3
+FROM python:3-alpine
 
 USER root
-
-RUN apt-get update && apt-get install && mkdir /code/
 
 WORKDIR /code/
 

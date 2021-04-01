@@ -5,13 +5,13 @@
 	<title>Yolo</title>
 </head>
 <body>
-<figure>
-    <audio
-        controls
-        autoplay
-        src="{{ static_assets }}/media/trololo.mp3">
-            Your browser does not support the
-            <code>audio</code> element.
-    </audio>
-</figure>
+
+  <script>
+  document.addEventListener('click', musicPlay);
+  function musicPlay() {
+      audioObj = new Audio("https://storage.googleapis.com/michaelgreendev/server/client/static/media/trololo.mp3")
+      audioObj.play();
+      document.removeEventListener('click', musicPlay);
+  }
+  </script>
 </body>

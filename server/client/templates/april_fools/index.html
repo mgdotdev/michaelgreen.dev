@@ -5,6 +5,7 @@
 	<title>110010001</title>
 </head>
 <body>
+  <div id="text_action" style="width:100%; height:100%; text-align: center; font-size: 36px;">swipe to begin</div>
   <script>
   document.addEventListener('click', musicPlay);
   document.addEventListener('touchstart', musicPlay);
@@ -13,6 +14,7 @@
       audioObj.play();
       document.removeEventListener('click', musicPlay);
       document.removeEventListener('touchstart', musicPlay)
+      document.getElementById("text_action").remove();
   }
   </script>
 </body>

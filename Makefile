@@ -31,7 +31,6 @@ blog-pdb:
 	docker build -t michaelgreendev_blog -f _docker/Dockerfile.test.blog --build-arg CACHEBUST_APP=$(date +%s) .
 	docker run -it -p "8081:8080" --name michaelgreendev_blog_1 michaelgreendev_blog
 
-
 gdeploy:
 	gsutil cp -r server/client/static/ gs://michaelgreendev/server/client/
 	gsutil cp -r blog/client/static/ gs://michaelgreendev/blog/client/

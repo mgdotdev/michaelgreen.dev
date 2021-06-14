@@ -59,12 +59,3 @@ class Portfolio:
             static_assets=SETTINGS["client"]["static_assets"]
         )
         return render
-
-    @cherrypy.expose
-    def _110010001(self):
-        with open(templates.april_fools()) as f:
-            template = Template(f.read())
-        render = template.render(
-            static_assets=SETTINGS["client"]["static_assets"]
-        )
-        return render

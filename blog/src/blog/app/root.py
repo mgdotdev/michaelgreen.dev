@@ -205,7 +205,6 @@ def _render_post(date, template, recent_posts):
     )
 
 
-
 @lru_cache
 def _post_datetimes():
     posts = (os.path.splitext(date)[0] for date in os.listdir(docs.dirname))

@@ -9,6 +9,11 @@ base:
 	docker build -t michaelgreendev_api -f _docker/Dockerfile.api --build-arg CACHEBUST_APP=$(date +%s) .
 	docker build -t michaelgreendev_blog -f _docker/Dockerfile.blog --build-arg CACHEBUST_APP=$(date +%s) .
 
+dev:
+	docker build -t michaelgreendev_server_test -f _docker/Dockerfile.test.server --build-arg CACHEBUST_APP=$(date +%s) .
+	docker build -t michaelgreendev_api_test -f _docker/Dockerfile.test.api --build-arg CACHEBUST_APP=$(date +%s) .
+	docker build -t michaelgreendev_blog_test -f _docker/Dockerfile.test.blog --build-arg CACHEBUST_APP=$(date +%s) . 
+
 reset:
 	docker-compose down
 	docker build -t michaelgreendev_server -f _docker/Dockerfile.server --build-arg CACHEBUST_APP=$(date +%s) .

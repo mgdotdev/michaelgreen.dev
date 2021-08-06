@@ -7,24 +7,15 @@ services:
       dockerfile: _docker/Dockerfile.test.api
     ports:
       - "8080:8080"
-    networks:
-      - mg-backend
   blog:
     build:
       context: .
       dockerfile: _docker/Dockerfile.test.blog
     ports:
       - "8081:8080"
-    networks:
-    - mg-backend
   server:
     build:
       context: .
       dockerfile: _docker/Dockerfile.test.server
     ports:
       - "80:8080"
-    networks:
-    - mg-backend
-networks:
-  mg-backend:
-    driver: bridge

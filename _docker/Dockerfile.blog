@@ -29,8 +29,6 @@ COPY --chown=michaelgrn blog/src/ blog/src/
 COPY --chown=michaelgrn blog/client/templates/ blog/client/templates/
 COPY --chown=michaelgrn blog/docs/ blog/docs/
 
-VOLUME /home/michaelgrn/programming/python/michaelgreen.dev:/code
-
 RUN pip install -e ./blog
 
 CMD python -m blog

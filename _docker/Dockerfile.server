@@ -2,19 +2,32 @@ FROM python:3-alpine
 
 USER root
 
+RUN /usr/sbin/adduser -u 1001 -D michaelgrn
+WORKDIR /home/michaelgrn
+
+RUN python -m venv venv \
+    && chown -R michaelgrn /home/michaelgrn
+
+USER michaelgrn
+
+ENV HOME=/home/michaelgrn
+ENV PATH=$HOME/.local/bin:$PATH
+
+RUN . venv/bin/activate
+
 WORKDIR /code/
 
 ARG CACHEBUST_REQ=1
 
-COPY server/requirements.txt server/
+COPY --chown=michaelgrn server/requirements.txt server/
 RUN python3 -m pip install --no-cache-dir -r ./server/requirements.txt
 
 ARG CACHEBUST_APP=1
 
-COPY server/setup.py server/
-COPY server/src/ server/src/
-COPY server/client/templates server/client/templates
+COPY --chown=michaelgrn server/setup.py server/
+COPY --chown=michaelgrn server/src/ server/src/
+COPY --chown=michaelgrn server/client/templates server/client/templates
 
-RUN pip install -e server
+RUN pip install -e ./server
 
-CMD app
+CMD python -m server

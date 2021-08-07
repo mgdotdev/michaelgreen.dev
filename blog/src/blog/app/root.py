@@ -105,7 +105,7 @@ def _format_code_string(snippet):
 
 
 @lru_cache
-def _parse_metadata(date, post=None):
+def _parse_post(date, post=None):
     if type(date) == datetime:
         date = date.strftime("%Y_%m_%d")
     if not post:
@@ -119,7 +119,7 @@ def _parse_metadata(date, post=None):
 
 def _parse_introduction(date, post=None, trailing=False):
     if not post:
-        _, post = _parse_metadata(date)
+        _, post = _parse_post(date)
     lines = iter(post.splitlines())
     for line in lines:
         if line and not line.startswith(("#", "!")):
@@ -130,7 +130,7 @@ def _parse_introduction(date, post=None, trailing=False):
 
 def _parse_title(date, post=None):
     if not post:
-        _, post = _parse_metadata(date)
+        _, post = _parse_post(date)
     lines = iter(post.splitlines()) 
     for line in lines:
         if line and line.startswith(("#")):
@@ -142,10 +142,7 @@ def _parse_title(date, post=None):
 def _recent_posts_by_year(recent_posts):
     results = {}
     for post in recent_posts:
-        try:
-            results[str(post["date"].year)].append(post)
-        except KeyError:
-            results[str(post["date"].year)] = [post]
+        results.setdefault(str(post["date"].year), []).append(post)
     return results
 
 
@@ -156,22 +153,17 @@ def _post_dates_by_focus(recent_posts=None, fmt=None):
     for post in recent_posts:
         for key, values in post.items():
             if key != "date":
-                if key not in results:
-                    results[key] = {}
                 for value in values:
                     if fmt:
                         p = post["date"].strftime(fmt)
                     else:
                         p = post["date"]
-                    try:
-                        results[key][value].append(p)
-                    except KeyError:
-                        results[key][value] = [p]
+                    results.setdefault(key, {}).setdefault(value, []).append(p)
     return results
 
 
 def _render_post(date, template, recent_posts):
-    metadata, post = _parse_metadata(date)
+    metadata, post = _parse_post(date)
     code_blocks = [block for block in re.finditer("```.*?\n(?s:.*?)\n```", post)]
     snippets = []
     for index, block in enumerate(code_blocks):
@@ -209,7 +201,11 @@ def _render_post(date, template, recent_posts):
 
 @lru_cache
 def _post_datetimes():
-    posts = (os.path.splitext(date)[0] for date in os.listdir(docs.dirname))
+    posts = (
+        os.path.splitext(date)[0] 
+        for date in os.listdir(docs.dirname) 
+        if not date.startswith("_")
+    )
     return sorted(
         [datetime.strptime(post, '%Y_%m_%d') for post in posts],
         reverse=True
@@ -228,7 +224,7 @@ def _recent_posts(length=None, year=None):
     if year:
         dates = [date for date in dates if date.year == int(year)]
     for date in dates:
-        metadata, _ = _parse_metadata(date)
+        metadata, _ = _parse_post(date)
         as_dict = _metadata_dict(metadata)
         as_dict.update({"date": date})
         results.append(as_dict)

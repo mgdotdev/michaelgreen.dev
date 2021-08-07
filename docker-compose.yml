@@ -2,20 +2,23 @@ version: '3.8'
 
 services:
   api:
+    image: mg-api
     build:
       context: .
-      dockerfile: _docker/Dockerfile.test.api
+      dockerfile: _docker/Dockerfile.api
     ports:
-      - "8080:8080"
+      - "9090:8080"
   blog:
+    image: mg-blog
     build:
       context: .
-      dockerfile: _docker/Dockerfile.test.blog
+      dockerfile: _docker/Dockerfile.blog
     ports:
       - "8081:8080"
   server:
+    image: mg-server
     build:
       context: .
-      dockerfile: _docker/Dockerfile.test.server
+      dockerfile: _docker/Dockerfile.server
     ports:
       - "80:8080"

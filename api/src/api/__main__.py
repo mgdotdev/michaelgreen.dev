@@ -4,16 +4,6 @@ from .root import ApiRoot
 from .resume.resume import Resume
 from .web_scraping.base import WebScraping
 
-config = {}
-# config = {
-#     '/': {
-#         'request.dispatch': cherrypy.dispatch.MethodDispatcher()
-#     },
-#     '/webscraping': {
-#         'request.dispatch': cherrypy.dispatch.RoutesDispatcher()
-#     }
-# }
-
 def main():
     cherrypy.config.update({
         'server.socket_host': '0.0.0.0'
@@ -23,7 +13,10 @@ def main():
     api.webscraping = WebScraping()
     api.resume = Resume()
 
-    cherrypy.tree.mount(api, '/v1', config)
+    cherrypy.tree.mount(api, '/v1', None)
     
     cherrypy.engine.start()
-    cherrypy.engine.block()    
+    cherrypy.engine.block()
+
+if __name__ == "__main__":
+    main()  

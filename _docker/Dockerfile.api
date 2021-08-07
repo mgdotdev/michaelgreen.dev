@@ -2,18 +2,31 @@ FROM python:3-alpine
 
 USER root
 
+RUN /usr/sbin/adduser -u 1001 -D michaelgrn
+WORKDIR /home/michaelgrn
+
+RUN python -m venv venv \
+    && chown -R michaelgrn /home/michaelgrn
+
+USER michaelgrn
+
+ENV HOME=/home/michaelgrn
+ENV PATH=$HOME/.local/bin:$PATH
+
+RUN . venv/bin/activate
+
 WORKDIR /code/
 
 ARG CACHEBUST_REQ=1
 
-COPY api/requirements.txt api/
-RUN python3 -m pip install --no-cache-dir -r ./api/requirements.txt
+COPY --chown=michaelgrn api/requirements.txt api/
+RUN python3 -m pip install -r ./api/requirements.txt
 
 ARG CACHEBUST_APP=1
 
-COPY api/setup.py api/
-COPY api/src/ api/src/
+COPY --chown=michaelgrn api/setup.py api/
+COPY --chown=michaelgrn api/src/ api/src/
 
-RUN pip install -e api
+RUN pip install -e ./api
 
-CMD api
+CMD python -m api

@@ -14,9 +14,6 @@ def read_requirements(requirements_file_path):
     return data
 
 setup(
-    entry_points={
-        'console_scripts': ['app=server.main:main']
-    },
     name='server',
     packages=find_packages(where="src"),
     package_data={"": ['*.txt']},

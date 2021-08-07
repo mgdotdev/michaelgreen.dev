@@ -14,9 +14,6 @@ def read_requirements(requirements_file_path):
     return data
 
 setup(
-    entry_points={
-        'console_scripts': ['app=blog.main:main']
-    },
     name='blog',
     packages=find_packages(where="src"),
     package_dir={"": "src"},

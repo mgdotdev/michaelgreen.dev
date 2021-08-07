@@ -134,7 +134,9 @@ def _parse_title(date, post=None):
     lines = iter(post.splitlines()) 
     for line in lines:
         if line and line.startswith(("#")):
-            return re.sub(r"#+? ", r"", line)
+            line = re.sub(r"#+? ", r"", line)
+            line = re.sub(r'\s\-.*', r"", line)
+            return line
 
 
 def _recent_posts_by_year(recent_posts):

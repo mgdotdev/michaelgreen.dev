@@ -2,20 +2,35 @@ FROM python:3-alpine
 
 USER root
 
+RUN /usr/sbin/adduser -u 1001 -D michaelgrn
+WORKDIR /home/michaelgrn
+
+RUN python -m venv venv \
+    && chown -R michaelgrn /home/michaelgrn
+
+USER michaelgrn
+
+ENV HOME=/home/michaelgrn
+ENV PATH=$HOME/.local/bin:$PATH
+
+RUN . venv/bin/activate
+
 WORKDIR /code/
 
 ARG CACHEBUST_REQ=1
 
 COPY blog/requirements.txt blog/
-RUN python3 -m pip install --no-cache-dir -r ./blog/requirements.txt
+RUN python3 -m pip install -r ./blog/requirements.txt
 
 ARG CACHEBUST_APP=1
 
-COPY blog/setup.py blog/
-COPY blog/src/ blog/src/
-COPY blog/client/templates/ blog/client/templates/
-COPY blog/docs/ blog/docs/
+COPY --chown=michaelgrn blog/setup.py blog/
+COPY --chown=michaelgrn blog/src/ blog/src/
+COPY --chown=michaelgrn blog/client/templates/ blog/client/templates/
+COPY --chown=michaelgrn blog/docs/ blog/docs/
 
-RUN pip install -e blog
+VOLUME /home/michaelgrn/programming/python/michaelgreen.dev:/code
 
-CMD app
+RUN pip install -e ./blog
+
+CMD python -m blog

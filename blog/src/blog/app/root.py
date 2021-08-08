@@ -166,10 +166,10 @@ def _render_post(date, template, recent_posts):
     metadata, post = _parse_post(date)
     code_blocks = [block for block in re.finditer("```.*?\n(?s:.*?)\n```", post)]
     snippets = []
-    for index, block in enumerate(code_blocks):
+    for block in code_blocks:
         snippet = block.group()
         language = re.search("```.*?\n", snippet).group()[3:-1]
-        placeholder = "_".join(["snippet", str(index)])
+        placeholder = _random_string()
         replacement = (
             f'<pre id="{language}">' if language else "<pre>"
         ) + placeholder + "</pre>"

@@ -1,6 +1,6 @@
 import cherrypy
 
-from .personal_info import DEFAULT_CITATION_RESULTS, _get_citation_metrics
+from .personal_info import DEFAULT_CITATION_RESULTS, get_citation_metrics
 
 class WebScraping:
     @cherrypy.expose
@@ -12,6 +12,6 @@ class WebScraping:
     @cherrypy.tools.json_out()
     def googlescholarcitations(self):
         try:
-            return _get_citation_metrics()
+            return get_citation_metrics()
         except:
             return DEFAULT_CITATION_RESULTS
